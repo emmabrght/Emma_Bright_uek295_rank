@@ -1,4 +1,4 @@
-package com.example.test.domain.product;
+package com.example.test.domain.rank;
 
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 @Getter
 @Entity
-public class Product {
+public class Rank {
 
     private Integer rank;
     private Integer buys;
@@ -18,13 +18,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    public Product(Integer rank, Integer buys, Integer bookId){
+    public Rank(Integer rank, Integer buys, Integer bookId){
         this.rank = rank;
         this.buys = buys;
         this.bookId = bookId;
     }
 
-    public Product() {
+    public Rank() {
 
     }
 }
