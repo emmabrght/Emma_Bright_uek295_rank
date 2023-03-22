@@ -1,7 +1,6 @@
 package com.example.test.domain.security;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,7 +24,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(BCryptPasswordEncoder bCryptPasswordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("user")
-                .password(bCryptPasswordEncoder.encode("userPass"))
+                .password(bCryptPasswordEncoder.encode("295"))
                 .roles("USER")
                 .build());
         return manager;

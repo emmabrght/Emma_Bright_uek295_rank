@@ -23,7 +23,7 @@ public class RankWeb {
     }
 
     @GetMapping("/{rankId}")
-    @PreAuthorize("hasAuthority('READ')")
+    //@PreAuthorize("hasAuthority('READ')")
     @Operation(summary = "Get ranks via id", description = "Fetches singular ranked product by its id and returns a JSON with the status code 200")
     public ResponseEntity<Rank> findById (@PathVariable("rankId") Integer id) {
         return ResponseEntity.ok().body(ps.findById(id));
@@ -56,12 +56,10 @@ public class RankWeb {
         return ResponseEntity.status(404).body("suck my balls lol");
     }
 
-    /*@ExceptionHandler(MethodArgumentNotValidException.class) //for valid numbers
+    @ExceptionHandler(MethodArgumentNotValidException.class) //for valid numbers
     public ResponseEntity<String> rankMethodArgumentNotValidException(MethodArgumentNotValidException manve){
         return ResponseEntity.status(400).body(manve.getFieldError().getDefaultMessage());
     }
-
-     */
 
     @ExceptionHandler(InstanceAlreadyExistsException.class)
     public ResponseEntity<String> rankAlreadyExists(InstanceAlreadyExistsException iaee){
