@@ -11,6 +11,7 @@ import javax.management.InstanceAlreadyExistsException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/rank")
@@ -36,6 +37,7 @@ public class RankWeb {
     }
 
     @DeleteMapping("/{rankId}")
+    @Operation(summary = "Delete a rank via id", description = "Deletes singular rank via its id and returns a string saying \"Deleted\"")
     public String deleteById (@PathVariable("rankId") Integer id) {
         ps.deleteById(id);
         return "Deleted";
@@ -53,12 +55,12 @@ public class RankWeb {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> rankNoSuchElementException(NoSuchElementException nsee){
-        return ResponseEntity.status(404).body("suck my balls lol");
+        return ResponseEntity.status(404).body(nsee.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class) //for valid numbers
     public ResponseEntity<String> rankMethodArgumentNotValidException(MethodArgumentNotValidException manve){
-        return ResponseEntity.status(400).body(manve.getFieldError().getDefaultMessage());
+        return ResponseEntity.status(400).body(Objects.requireNonNull(manve.getFieldError()).getDefaultMessage());
     }
 
     @ExceptionHandler(InstanceAlreadyExistsException.class)

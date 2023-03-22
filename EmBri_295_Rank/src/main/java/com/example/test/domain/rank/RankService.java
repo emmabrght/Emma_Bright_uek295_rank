@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Service
@@ -18,7 +19,7 @@ public class RankService {
     }
 
     public Rank findById(Integer id){
-        return pr.findById(id).orElseThrow(/*RankNotFoundException::new*/);
+        return pr.findById(id).orElseThrow(() -> new NoSuchElementException("This doesn't exist lol"));
     }
     public List<Rank> findAll(){
         return pr.findAll();
@@ -33,7 +34,7 @@ public class RankService {
         if (!pr.existsById(rank.getId())){
             return createById(rank);
         } else if (!Objects.equals(rank.getId(), id)) {
-            throw new InstanceAlreadyExistsException();
+            throw new InstanceAlreadyExistsException("lol no");
         }
         return pr.save(rank);
     }

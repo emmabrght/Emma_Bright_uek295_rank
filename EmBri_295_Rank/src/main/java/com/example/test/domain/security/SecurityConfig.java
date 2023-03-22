@@ -13,6 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+/*1. enables pre- / post-annotations: checks method before/after running it, allows the result to be altered
+2. allows @secured annotation: which roles can use x method
+3. allows @roleallowed annotation: jsr-250 version of @secured */
 public class SecurityConfig {
 
     @Bean
@@ -20,6 +23,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+/*userDetailsService retrieves username, password and any other authentication variables */
     @Bean
     public UserDetailsService userDetailsService(BCryptPasswordEncoder bCryptPasswordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -30,6 +34,7 @@ public class SecurityConfig {
         return manager;
     }
 
+/*filter chain which can be matched with an HTTP request */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf()
@@ -42,7 +47,7 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //never creates an HTTP session
 
         return http.build();
     }
