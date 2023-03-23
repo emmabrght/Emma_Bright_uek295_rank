@@ -24,19 +24,21 @@ public class RankWeb {
     }
 
     @GetMapping("/{rankId}")
-    //@PreAuthorize("hasAuthority('READ')")
+    @PreAuthorize("hasAuthority('DEFAULT')")
     @Operation(summary = "Get ranks via id", description = "Fetches singular ranked product by its id and returns a JSON with the status code 200")
     public ResponseEntity<Rank> findById (@PathVariable("rankId") Integer id) {
         return ResponseEntity.ok().body(ps.findById(id));
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('DEFAULT')")
     @Operation(summary = "Get all ranks", description = "Fetches all ranked products and returns a JSON with the status code 200")
     public List<Rank> findAll () {
         return ps.findAll();
     }
 
     @DeleteMapping("/{rankId}")
+    @PreAuthorize("hasAuthority('DEFAULT')")
     @Operation(summary = "Delete a rank via id", description = "Deletes singular rank via its id and returns a string saying \"Deleted\"")
     public String deleteById (@PathVariable("rankId") Integer id) {
         ps.deleteById(id);
@@ -44,11 +46,13 @@ public class RankWeb {
     }
 
     @PutMapping("/{rankId}")
+    @PreAuthorize("hasAuthority('DEFAULT')")
     public ResponseEntity<Rank> updateById (@PathVariable("rankId") Integer id, @RequestBody Rank rank) throws InstanceAlreadyExistsException {
         return ResponseEntity.status(200).body(ps.updateById(rank, id));
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('DEFAULT')")
     public ResponseEntity<Rank> createById (@Valid @RequestBody Rank rank) {
         return ResponseEntity.status(201).body(ps.createById(rank));
     }
