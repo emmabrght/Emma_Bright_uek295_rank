@@ -15,6 +15,5 @@ public class Authority {
     private Integer id;
 
     private String name;
-    @ManyToMany(mappedBy = "authorities")
-    private Collection<Role> roles;
+
 }

@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
@@ -20,17 +22,15 @@ import org.springframework.security.web.SecurityFilterChain;
 3. allows @roleallowed annotation: jsr-250 version of @secured */
 public class WebSecurityConfig {
 
-   private final UserDetailsService userService;
-
-    Encoder pe = new Encoder();
-
-  @Bean
-  public AuthenticationManager authenticationManager() {
-    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.setPasswordEncoder(pe.passwordEncoder());
-    provider.setUserDetailsService(userService);
-    return new ProviderManager(provider);
-  }
+    private final UserDetailsService userService;
+    private final Encoder pe;
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(pe.passwordEncoder());
+        provider.setUserDetailsService(userService);
+        return new ProviderManager(provider);
+    }
 
     /*filter chain which can be matched with an HTTP request */
     @Bean
@@ -50,5 +50,4 @@ public class WebSecurityConfig {
 
         return http.build();
     }
-
 }

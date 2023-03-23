@@ -3,6 +3,7 @@ package com.example.test.domain.user;
 import java.util.Collection;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserDetailsService {
+    @Autowired
     UserRepository repository;
     @Override
     public UserDetails loadUserByUsername(String user) throws UsernameNotFoundException {
