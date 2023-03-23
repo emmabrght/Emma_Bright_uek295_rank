@@ -1,7 +1,7 @@
 --USERS
 insert into users (id, username, password)
-values ('001', 'test', '1234' ),
-('002', 'test2', '12345')
+values ('001', 'user', 'uek295' ),
+('002', 'user2', 'uek295_2')
  ON CONFLICT DO NOTHING;
 
 --ROLES
