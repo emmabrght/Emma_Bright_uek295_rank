@@ -2,8 +2,6 @@ package com.example.test.domain.user;
 
 import java.util.Collection;
 
-import com.example.test.domain.user.User;
-import com.example.test.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
