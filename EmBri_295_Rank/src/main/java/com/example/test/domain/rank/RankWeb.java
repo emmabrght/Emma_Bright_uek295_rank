@@ -1,6 +1,7 @@
 package com.example.test.domain.rank;
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +15,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @RestController
+@Log4j2
 @RequestMapping("/rank")
 public class RankWeb {
 
@@ -47,28 +49,33 @@ public class RankWeb {
 
     @PutMapping("/{rankId}")
     @PreAuthorize("hasAuthority('DEFAULT')")
+    @Operation(summary = "Updates rank via id", description = "Updates data of selected rank via its id, returns JSON with the updated data")
     public ResponseEntity<Rank> updateById (@PathVariable("rankId") Integer id, @RequestBody Rank rank) throws InstanceAlreadyExistsException {
         return ResponseEntity.status(200).body(ps.updateById(rank, id));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('DEFAULT')")
+    @Operation(summary = "Creates new rank", description = "Will create a new rank and give it an auto generated id")
     public ResponseEntity<Rank> createById (@Valid @RequestBody Rank rank) {
         return ResponseEntity.status(201).body(ps.createById(rank));
     }
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> rankNoSuchElementException(NoSuchElementException nsee){
+        log.error("This Rank doesn't exist.");
         return ResponseEntity.status(404).body(nsee.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class) //for valid numbers
     public ResponseEntity<String> rankMethodArgumentNotValidException(MethodArgumentNotValidException manve){
+        log.error("Invalid Input, please try again.");
         return ResponseEntity.status(400).body(Objects.requireNonNull(manve.getFieldError()).getDefaultMessage());
     }
 
     @ExceptionHandler(InstanceAlreadyExistsException.class)
     public ResponseEntity<String> rankAlreadyExists(InstanceAlreadyExistsException iaee){
+        log.error("This already exists, try again.");
         return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(iaee.getMessage());
     }
 }
